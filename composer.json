@@ -1,6 +1,7 @@
 {
     "name": "postor/yii2-for-sae",
     "description": "The adapt for Yii2 framework to run on sina app engine.",
+    "version":"0.0.1"
     "type": "yii2-extension",
     "keywords": ["yii2", "yii 2", "sae", "sinaapp", "saestorage", "adapt"],
     "license": "BSD-3-Clause",
