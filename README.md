@@ -10,7 +10,7 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run命令行输入并运行
 
 ```
-php composer.phar require "postor/yii2-for-sae" "dev-master"
+php composer.phar require "postor/yii2-for-sae" "*"
 ```
 
 or add或者在配置文件composer.json中添加
