@@ -15,7 +15,11 @@
         "source": "https://github.com/postor/yii2-for-sae"
     },
     "require": {
+        "yiisoft/yii2": "*"
     },
     "autoload": {
+        "psr-4": {
+            "postor\\yii2-for-sae\\": ""
+        }
     }
 }
