@@ -17,8 +17,5 @@
     "require": {
     },
     "autoload": {
-        "psr-4": {
-            "postor\\yii2-for-sae\\": ""
-        }
     }
 }
