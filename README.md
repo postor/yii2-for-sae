@@ -1,86 +1,64 @@
-Yii2 FileAPI widget.
+Yii2 adapt for sina app engine.这是针对yii2在新浪sae上运行做的适配
 ==================
-This widget is a Yii 2 wrapper of [FileAPI](https://github.com/RubaXa/jquery.fileapi) plugin.
+This is using saestorage for asset publishing.使用saestorage实现资源发布功能
 
-Installation
+Installation安装步骤：
 ------------
 
-The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
+The preferred way to install this extension is through [composer](http://getcomposer.org/download/).推荐使用composer
 
-Either run
-
-```
-php composer.phar require --prefer-dist vova07/yii2-fileapi-widget "*"
-```
-
-or add
+Either run命令行输入并运行
 
 ```
-"vova07/yii2-fileapi-widget": "*"
+php composer.phar require --prefer-dist postor/yii2-for-sae "*"
+```
+
+or add或者在配置文件composer.json中添加
+
+```
+"postor/yii2-for-sae": "*"
 ```
 
 to the require section of your `composer.json` file.
 
-Usage:
+Usage使用方法:
 ------
 
 ```php
-// MyController.php
-
-use vova07\fileapi\actions\UploadAction as FileAPIUpload;
+// config/web.php
+// change all file operations to db or seastorage or kvdb
+//修改所有文件操作到数据库，或者saestorage或者kvdb
 ...
-
-public function actions()
-{
-    return [
-        'fileapi-upload' => [
-            'class' => FileAPIUpload::className(),
-            'path' => '/path/to/temp/files'
-        ]
-    ];
-}
-```
-
-```php
-// MyModel.php
-
-use vova07\fileapi\behaviors\UploadBehavior;
-...
-
-public function behaviors()
-{
-    return [
-        'uploadBehavior' => [
-            'class' => UploadBehavior::className(),
-            'attributes' => [
-                'preview_url' => [
-                    'path' => '/path/to/previews',
-                    'tempPath' => '/path/to/temp/files/previews',
-                    'url' => '/url/to/previews'
+    'components' => [
+        //cache to db缓存到db
+        'cache' => [
+            'class' => 'yii\caching\DbCache',
+        ],
+        //sea mysql配置sae的mysql
+        'db' => [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'mysql:host='.SAE_MYSQL_HOST_M.';port='.SAE_MYSQL_PORT.';dbname='.SAE_MYSQL_DB,
+            'username' => SAE_MYSQL_USER,
+            'password' => SAE_MYSQL_PASS,
+            'charset' => 'utf8',
+            'tablePrefix' => 'scd_',
+        ],
+        //use seastorage for assets使用sae发布资源
+        'assetManager' =>[
+        	'class'=>'postor\yii2-for-sae\SaeAssetManager',
+        	'converter' => [
+        		'class' => 'yii\web\AssetConverter',
+        	],
+        ],
+        //log to db日志也修改到db
+        'log' => [
+            'traceLevel' => YII_DEBUG ? 3 : 0,
+            'targets' => [
+                [
+                    'class' => 'yii\log\DbTarget',
+                    'levels' => ['error', 'warning'],
                 ],
-                'image_url' => [
-                    'path' => '/path/to/images',
-                    'tempPath' => '/path/to/temp/files/images',
-                    'url' => '/url/to/images'
-                ]
-            ]
-        ]
-    ];
-}
-```
-
-```php
-// _form.php
-
-use vova07\fileapi\Widget as FileAPI;
-...
-
-echo $form->field($model, 'preview_url')->widget(
-    FileAPI::className(),
-    [
-        'settings' => [
-            'url' => ['/controller/fileapi-upload']
-        ]
+            ],
+        ],
     ]
-);
 ```
