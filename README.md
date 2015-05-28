@@ -62,3 +62,4 @@ Usage使用方法:
         ],
     ]
 ```
+demo: http://yii2postor.sinaapp.com/web/?r=admin
