@@ -150,7 +150,7 @@ class SaeAssetManager extends Component
 		parent::init();
 		$this->saeStorage = new \SaeStorage;
 		$this->basePath = 'saestor://'.$this->assetDomain;
-		$this->baseUrl = $this->saeStorage->getUrl(.$this->assetDomain,'');
+		$this->baseUrl = $this->saeStorage->getUrl($this->assetDomain,'');
 	}
 
 	/**
@@ -393,7 +393,7 @@ class SaeAssetManager extends Component
 		$dstFile = $dstDir . '/' . $fileName;
 		copy($src, $dstFile);
 
-		return [$dstFile,$this->saeStorage->getUrl('assets',$dir)];
+		return [$dstFile,$this->saeStorage->getUrl($this->assetDomain,$dir)];
 	}
 
 	/**
@@ -443,7 +443,7 @@ class SaeAssetManager extends Component
 	}
 
     public function saeIsDir($dir){
-		$p = $this->saeStorage->getListByPath('assets',$dir,1);
+		$p = $this->saeStorage->getListByPath($this->assetDomain,$dir,1);
 		return $p['dirNum']+$p['fileNum'];
 	}
 	/**
