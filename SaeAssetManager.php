@@ -16,6 +16,7 @@ use yii\web;
 class SaeAssetManager extends Component
 {
 	public $saeStorage = null;
+	public $assetDomain = 'assets';
 	/**
 	 * @var array|boolean list of asset bundle configurations. This property is provided to customize asset bundles.
 	 * When a bundle is being loaded by [[getBundle()]], if it has a corresponding configuration specified here,
@@ -148,8 +149,8 @@ class SaeAssetManager extends Component
 	{
 		parent::init();
 		$this->saeStorage = new \SaeStorage;
-		$this->basePath = 'saestor://assets';
-		$this->baseUrl = $this->saeStorage->getUrl('assets','');
+		$this->basePath = 'saestor://'.$this->assetDomain;
+		$this->baseUrl = $this->saeStorage->getUrl(.$this->assetDomain,'');
 	}
 
 	/**
@@ -237,7 +238,7 @@ class SaeAssetManager extends Component
             
 			$dir = $this->hash($bundle->sourcePath . filemtime($bundle->sourcePath));
 			$dstDir = $dir . '/' . $asset;
-			return $this->saeStorage->getUrl('assets',$dstDir);
+			return $this->saeStorage->getUrl($this->assetDomain,$dstDir);
 		}else{
 			return $asset;	
 		}
@@ -487,9 +488,9 @@ class SaeAssetManager extends Component
 		}
 		if (is_string($path) && ($path = realpath($path)) !== false) {
 			if (is_file($path)) {
-				return $this->saeStorage->getUrl('assets', $this->hash(dirname($path) . filemtime($path)) . '/' . basename($path));
+				return $this->saeStorage->getUrl($this->assetDomain, $this->hash(dirname($path) . filemtime($path)) . '/' . basename($path));
 			} else {
-				return $this->saeStorage->getUrl('assets', $this->hash($path . filemtime($path)));
+				return $this->saeStorage->getUrl($this->assetDomain, $this->hash($path . filemtime($path)));
 			}
 		} else {
 			return false;

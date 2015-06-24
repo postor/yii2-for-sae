@@ -23,8 +23,14 @@ to the require section of your `composer.json` file.
 
 Usage使用方法:
 ------
+1.create a saestorage domain named 'assets' in SAE admin, this can be another name but need to be configed as assetDomain.
+
+在sae后台开启storage，并建立一个domain叫做‘assets’，如果使用别的名字需要在配置中使用assetDomain来配置
+
+2.config 配置
 
 ```php
+
 // config/web.php
 // change all file operations to db or seastorage or kvdb
 //修改所有文件操作到数据库，或者saestorage或者kvdb
@@ -45,7 +51,8 @@ Usage使用方法:
         ],
         //use seastorage for assets使用sae发布资源
         'assetManager' =>[
-        	'class'=>'postor\yii2-for-sae\SaeAssetManager',
+        	'class'=>'postor\sae\SaeAssetManager',
+        	'assetDomain'=>'assets',
         	'converter' => [
         		'class' => 'yii\web\AssetConverter',
         	],
