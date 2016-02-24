@@ -417,7 +417,7 @@ class SaeAssetManager extends Component
 	{
 		$dir = $this->hash($src . filemtime($src));
 		$dstDir = $this->basePath . DIRECTORY_SEPARATOR . $dir;
-		if (!empty($options['forceCopy']) || ($this->forceCopy && !isset($options['forceCopy'])) || !$this->saeIsDir($dstDir)) {
+		if (!empty($options['forceCopy']) || ($this->forceCopy && !isset($options['forceCopy'])) || !$this->saeIsDir($dir)) {
 			$opts = [
 			'dirMode' => $this->dirMode,
 			'fileMode' => $this->fileMode,
